@@ -91,8 +91,10 @@ const Contact = () => {
             <p className="text-xs sm:text-sm text-secondary/40 dark:text-secondary/40 [data-theme='light']:text-secondary/60 mb-4 sm:mb-6">Connect on</p>
             <div className="flex gap-4 sm:gap-6 flex-wrap">
               {[
-                { name: "GitHub", url: "https://github.com/anuj1410" },
-                { name: "LinkedIn", url: "https://www.linkedin.com/in/anuj-1410" },
+                { name: "GitHub", url: "https://github.com/anuj-1410" },
+                { name: "LinkedIn", url: "https://www.linkedin.com/in/anuj1410" },
+                { name: "LeetCode", url: "https://leetcode.com/anuj1410" },
+                { name: "Codolio", url: "https://codolio.com/profile/anuj1410" },
               ].map((social) => (
                 <a
                   key={social.name}

@@ -48,21 +48,50 @@ const Hero = () => {
     return () => clearInterval(interval)
   }, [])
 
-  // Hide contact button when Contact section is visible
+  // Hide contact button when Contact section is visible or navbar menu is open on mobile
   useEffect(() => {
     const handleScroll = () => {
       const contactSection = document.getElementById("contact")
+      const isNavbarOpen = document.documentElement.getAttribute("data-navbar-open") === "true"
+      const isMobile = window.innerWidth < 1024
+      
       if (contactSection) {
         const rect = contactSection.getBoundingClientRect()
         // Hide button when Contact section is in viewport (top of section is above bottom of viewport)
         const isContactVisible = rect.top < window.innerHeight && rect.bottom > 0
-        setShowContactButton(!isContactVisible)
+        // Also hide if navbar menu is open on mobile
+        setShowContactButton(!isContactVisible && !(isMobile && isNavbarOpen))
+      } else {
+        // If contact section not found, just check navbar state
+        setShowContactButton(!(isMobile && isNavbarOpen))
+      }
+    }
+
+    // Check for navbar state changes
+    const checkNavbarState = () => {
+      const isNavbarOpen = document.documentElement.getAttribute("data-navbar-open") === "true"
+      const isMobile = window.innerWidth < 1024
+      if (isMobile && isNavbarOpen) {
+        setShowContactButton(false)
+      } else {
+        handleScroll()
       }
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
+    
+    // Watch for navbar state changes
+    const observer = new MutationObserver(checkNavbarState)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-navbar-open"],
+    })
+    
     handleScroll() // Check initial state
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      observer.disconnect()
+    }
   }, [])
 
   const scrollToSection = (sectionId: string) => {
@@ -367,7 +396,7 @@ const Hero = () => {
 
       {/* Floating Contact Button with Label - Bottom Right */}
       <div
-        className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 transition-all duration-300 ${
+        className={`fixed bottom-8 right-8 z-30 lg:z-50 flex items-center gap-3 transition-all duration-300 ${
           showContactButton ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
       >

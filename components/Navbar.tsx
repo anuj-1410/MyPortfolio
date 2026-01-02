@@ -69,9 +69,13 @@ const Navbar = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      // Use scrollIntoView which respects scroll-margin-top CSS property
-      element.scrollIntoView({ behavior: "smooth", block: "start" })
+      // Close menu first for better UX on mobile
       setIsOpen(false)
+      // Small delay to allow menu to start closing before scroll
+      setTimeout(() => {
+        // Use scrollIntoView which respects scroll-margin-top CSS property
+        element.scrollIntoView({ behavior: "smooth", block: "start" })
+      }, 50)
     }
   }
 
@@ -103,6 +107,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Prevent body scroll when menu is open on mobile and set data attribute for contact button
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+      document.documentElement.setAttribute("data-navbar-open", "true")
+    } else {
+      document.body.style.overflow = ""
+      document.documentElement.removeAttribute("data-navbar-open")
+    }
+    return () => {
+      document.body.style.overflow = ""
+      document.documentElement.removeAttribute("data-navbar-open")
+    }
+  }, [isOpen])
 
   return (
     <>
@@ -181,11 +200,11 @@ const Navbar = () => {
         {/* Glass effect background */}
         <div className="absolute inset-0 bg-background/80 dark:bg-background/80 [data-theme='light']:bg-background/90 backdrop-blur-xl border-b border-secondary/10 dark:border-secondary/10 [data-theme='light']:border-secondary/20" />
         
-        <div className="relative flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5">
+        <div className="relative flex items-center justify-between px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5">
           {/* Left side - Theme Button */}
           <button
             onClick={toggleTheme}
-            className="relative z-50 w-10 h-10 sm:w-12 sm:h-12 rounded-full border flex items-center justify-center hover:border-accent transition-all duration-300"
+            className="relative z-50 w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full border flex items-center justify-center active:scale-95 transition-all duration-300 touch-manipulation"
             style={{
               backgroundColor: theme === "dark" ? "rgba(26, 26, 26, 0.6)" : "rgba(245, 245, 245, 0.6)",
               borderColor: theme === "dark" ? "rgba(245, 245, 240, 0.1)" : "rgba(10, 10, 10, 0.1)",
@@ -193,13 +212,13 @@ const Navbar = () => {
             }}
             aria-label="Toggle theme"
           >
-            <span className="text-lg sm:text-xl">{theme === "dark" ? "☀️" : "🌙"}</span>
+            <span className="text-base sm:text-lg md:text-xl">{theme === "dark" ? "☀️" : "🌙"}</span>
           </button>
 
           {/* Logo */}
           <button
             onClick={() => scrollToSection("home")}
-            className="text-xl font-display font-bold tracking-tight text-secondary"
+            className="text-lg sm:text-xl md:text-2xl font-display font-bold tracking-tight text-secondary active:scale-95 transition-transform duration-200 touch-manipulation"
           >
             ANUJ<span className="text-accent">.</span>
           </button>
@@ -207,44 +226,50 @@ const Navbar = () => {
           {/* Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`relative z-50 w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300 ${
+            className={`relative z-50 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl sm:rounded-2xl transition-all duration-300 active:scale-95 touch-manipulation ${
               isOpen ? "bg-accent text-primary" : "bg-muted/50 text-secondary backdrop-blur-sm"
             }`}
             aria-label="Toggle Menu"
           >
-            {isOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+            {isOpen ? <FiX size={20} className="sm:w-5 sm:h-5 md:w-6 md:h-6" /> : <FiMenu size={20} className="sm:w-5 sm:h-5 md:w-6 md:h-6" />}
           </button>
         </div>
       </div>
 
       {/* Full Screen Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 transition-all duration-700 ${
+        className={`fixed inset-0 z-40 transition-all duration-500 ease-in-out ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        onClick={(e) => {
+          // Close menu when clicking on overlay background
+          if (e.target === e.currentTarget) {
+            setIsOpen(false)
+          }
+        }}
       >
-        {/* Background - Full Screen Black */}
-        <div className="absolute inset-0 bg-primary" />
+        {/* Background - Full Screen */}
+        <div className="absolute inset-0 bg-primary transition-opacity duration-500" />
 
         {/* Menu Content */}
-        <div className="relative h-full flex flex-col lg:flex-row">
+        <div className="relative h-full flex flex-col lg:flex-row overflow-hidden">
           {/* Left Side - Navigation */}
-          <div className="flex-1 flex flex-col justify-center px-4 sm:px-8 md:px-16 lg:px-24 pt-24 lg:pt-0 overflow-hidden">
-            <nav className="space-y-1">
+          <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-24 pt-20 sm:pt-24 md:pt-28 lg:pt-0 pb-8 sm:pb-12 md:pb-16 overflow-y-auto overscroll-contain hide-scrollbar">
+            <nav className="space-y-0.5 sm:space-y-1 md:space-y-2">
               {menuItems.map((item, index) => {
                 return (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`group flex items-center justify-between w-full text-left transition-all duration-500 py-2 sm:py-3 ${
+                    className={`group flex items-center justify-between w-full text-left transition-all duration-500 py-2 sm:py-2.5 md:py-3 active:scale-95 touch-manipulation ${
                       isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                     }`}
-                    style={{ transitionDelay: isOpen ? `${index * 80 + 200}ms` : "0ms" }}
+                    style={{ transitionDelay: isOpen ? `${index * 60 + 150}ms` : "0ms" }}
                   >
                     {/* Label */}
                     <span
-                      className={`text-4xl sm:text-5xl md:text-7xl font-display font-bold transition-all duration-300 ${
-                        activeSection === item.id ? "text-accent" : "text-secondary group-hover:text-accent"
+                      className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-bold transition-all duration-300 leading-tight ${
+                        activeSection === item.id ? "text-accent" : "text-secondary group-active:text-accent"
                       }`}
                     >
                       {item.label}
@@ -252,10 +277,10 @@ const Navbar = () => {
 
                     {/* Arrow */}
                     <FiArrowUpRight
-                      className={`w-6 h-6 sm:w-8 sm:h-8 transition-all duration-300 flex-shrink-0 ${
+                      className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 transition-all duration-300 flex-shrink-0 ml-2 ${
                         activeSection === item.id
                           ? "text-accent opacity-100 rotate-0"
-                          : "text-secondary/30 group-hover:text-accent group-hover:rotate-45"
+                          : "text-secondary/30 group-active:text-accent group-active:rotate-45"
                       }`}
                     />
                   </button>
@@ -266,42 +291,42 @@ const Navbar = () => {
 
           {/* Right Side - Info */}
           <div
-            className={`lg:w-96 flex flex-col justify-end p-8 md:p-16 transition-all duration-700 delay-500 ${
+            className={`w-full lg:w-96 flex flex-col justify-end p-6 sm:p-8 md:p-12 lg:p-16 transition-all duration-500 delay-300 ${
               isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               <div>
-                <p className="text-secondary/40 text-xs uppercase tracking-widest mb-2">Get in touch</p>
+                <p className="text-secondary/40 text-[10px] sm:text-xs uppercase tracking-widest mb-2">Get in touch</p>
                 <a
                   href="mailto:anujagrawal1410@gmail.com"
-                  className="text-secondary hover:text-accent transition-colors text-base sm:text-lg font-medium break-all"
+                  className="text-secondary hover:text-accent active:text-accent transition-colors text-sm sm:text-base md:text-lg font-medium break-all touch-manipulation"
                 >
                   anujagrawal1410@gmail.com
                 </a>
               </div>
 
               <div>
-                <p className="text-secondary/40 text-xs uppercase tracking-widest mb-2">Based in</p>
-                <p className="text-secondary text-base sm:text-lg font-medium">Nagpur, India</p>
+                <p className="text-secondary/40 text-[10px] sm:text-xs uppercase tracking-widest mb-2">Based in</p>
+                <p className="text-secondary text-sm sm:text-base md:text-lg font-medium">Nagpur, India</p>
               </div>
 
               <div>
-                <p className="text-secondary/40 text-xs uppercase tracking-widest mb-3">Follow</p>
-                <div className="flex flex-wrap gap-4">
+                <p className="text-secondary/40 text-[10px] sm:text-xs uppercase tracking-widest mb-3">Follow</p>
+                <div className="flex flex-wrap gap-3 sm:gap-4">
                   <a
-                    href="https://github.com/anuj1410"
+                    href="https://github.com/anuj-1410"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-secondary/50 hover:text-accent transition-colors text-sm font-medium hover-underline"
+                    className="text-secondary/50 hover:text-accent active:text-accent transition-colors text-sm sm:text-base font-medium hover-underline touch-manipulation py-1"
                   >
                     GitHub
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/anuj-1410"
+                    href="https://www.linkedin.com/in/anuj1410"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-secondary/50 hover:text-accent transition-colors text-sm font-medium hover-underline"
+                    className="text-secondary/50 hover:text-accent active:text-accent transition-colors text-sm sm:text-base font-medium hover-underline touch-manipulation py-1"
                   >
                     LinkedIn
                   </a>
@@ -318,6 +343,15 @@ const Navbar = () => {
           main {
             margin-left: 80px;
           }
+        }
+        
+        /* Hide scrollbar for menu content on mobile */
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
         }
       `}</style>
     </>

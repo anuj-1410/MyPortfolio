@@ -13,7 +13,7 @@ const Footer = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
           {/* Copyright */}
           <p className="text-xs sm:text-sm text-secondary/40 dark:text-secondary/40 [data-theme='light']:text-secondary/60 text-center sm:text-left">
-            © 2024 Anuj Agrawal. All rights reserved.
+            © 2025 Anuj Agrawal. All rights reserved.
           </p>
 
           {/* Back to Top */}
