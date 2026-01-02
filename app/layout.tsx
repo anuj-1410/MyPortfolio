@@ -18,6 +18,11 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Anuj Agrawal - AI/ML Engineer & Data Scientist",
   description: "Portfolio of Anuj Agrawal - AI/ML Engineer, Data Scientist & Full Stack Developer",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
