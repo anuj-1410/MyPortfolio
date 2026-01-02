@@ -144,28 +144,110 @@ const Skills = () => {
     return () => clearInterval(autoRotateRef.current)
   }, [isVisible])
 
-  // Responsive radius calculation
+  // Responsive radius calculation - ensures skills are positioned around center circle with consistent spacing
+  // This calculation ensures NO overlap on any screen size
   useEffect(() => {
     const updateRadius = () => {
-      if (containerRef.current) {
-        const width = containerRef.current.offsetWidth
-        // Calculate radius as percentage of container width for responsiveness
-        const newRadius = width < 320 ? width * 0.32  // Very small screens
-          : width < 640 ? width * 0.35  // Mobile
-          : width < 768 ? width * 0.38  // Small tablets
-          : width < 1024 ? width * 0.40  // Tablets
-          : width < 1280 ? width * 0.42  // Large tablets/small desktop
-          : width * 0.45  // Desktop: larger radius
-        setRadius(newRadius)
+      if (containerRef.current && typeof window !== 'undefined') {
+        // Get actual rendered container dimensions
+        const containerWidth = containerRef.current.offsetWidth
+        const containerHeight = containerRef.current.offsetHeight
+        const containerSize = Math.min(containerWidth, containerHeight)
+        
+        // Determine which Tailwind breakpoint is active based on window width
+        // This determines which size classes (w-36, sm:w-44, etc.) are active
+        const windowWidth = window.innerWidth
+        let centerDiameter = 144  // w-36 = 144px (base)
+        let skillDiameter = 80    // w-20 = 80px (base)
+        
+        if (windowWidth >= 1024) {
+          // lg breakpoint: center w-56 (224px), skill w-32 (128px)
+          centerDiameter = 224
+          skillDiameter = 128
+        } else if (windowWidth >= 768) {
+          // md breakpoint: center w-52 (208px), skill w-28 (112px)
+          centerDiameter = 208
+          skillDiameter = 112
+        } else if (windowWidth >= 640) {
+          // sm breakpoint: center w-44 (176px), skill w-24 (96px)
+          centerDiameter = 176
+          skillDiameter = 96
+        }
+        
+        const centerRadius = centerDiameter / 2
+        const skillRadius = skillDiameter / 2
+        
+        // Calculate maximum possible radius (leaving padding from edge)
+        const edgePadding = 8 // Padding from container edge
+        const maxRadius = (containerSize / 2) - skillRadius - edgePadding
+        
+        // Calculate minimum required gap to prevent overlap
+        // We want: centerRadius + gap + skillRadius <= maxRadius
+        // So: gap = maxRadius - centerRadius - skillRadius
+        const minGap = maxRadius - centerRadius - skillRadius
+        
+        // Use a percentage-based gap, but ensure it's at least the minimum required
+        // Higher percentage on smaller screens to prevent overlap
+        const gapPercentage = containerSize < 320 ? 0.08  // Very small: 8%
+          : containerSize < 384 ? 0.075  // Small: 7.5%
+          : containerSize < 448 ? 0.07   // Medium: 7%
+          : containerSize < 512 ? 0.065  // Large: 6.5%
+          : 0.06  // Very large: 6%
+        
+        const preferredGap = containerSize * gapPercentage
+        
+        // Use the larger of preferred gap or minimum required gap
+        // This ensures no overlap while maintaining consistent visual spacing
+        const gap = Math.max(minGap, preferredGap)
+        
+        // Calculate final radius: centerRadius + gap + skillRadius
+        const newRadius = centerRadius + gap + skillRadius
+        
+        // Final safety check: ensure radius doesn't exceed maximum
+        const finalRadius = Math.min(newRadius, maxRadius)
+        
+        setRadius(finalRadius)
       } else {
-        // Fallback for SSR
+        // Fallback for SSR - will recalculate on mount
         if (typeof window !== 'undefined') {
-          const width = window.innerWidth
-          const newRadius = width < 640 ? 90
-            : width < 768 ? 110
-            : width < 1024 ? 140
-            : width < 1280 ? 180
-            : 200
+          const windowWidth = window.innerWidth
+          // Estimate container size based on max-width constraints
+          let estimatedContainerSize = 280 // base max-w-[280px]
+          if (windowWidth >= 1024) {
+            estimatedContainerSize = 512 // lg: max-w-lg = 32rem = 512px
+          } else if (windowWidth >= 768) {
+            estimatedContainerSize = 448 // md: max-w-md = 28rem = 448px
+          } else if (windowWidth >= 640) {
+            estimatedContainerSize = 384 // sm: max-w-sm = 24rem = 384px
+          }
+          
+          let centerDiameter = 144
+          let skillDiameter = 80
+          
+          if (windowWidth >= 1024) {
+            centerDiameter = 224
+            skillDiameter = 128
+          } else if (windowWidth >= 768) {
+            centerDiameter = 208
+            skillDiameter = 112
+          } else if (windowWidth >= 640) {
+            centerDiameter = 176
+            skillDiameter = 96
+          }
+          
+          const centerRadius = centerDiameter / 2
+          const skillRadius = skillDiameter / 2
+          const maxRadius = (estimatedContainerSize / 2) - skillRadius - 8
+          const minGap = maxRadius - centerRadius - skillRadius
+          const gapPercentage = estimatedContainerSize < 320 ? 0.08
+            : estimatedContainerSize < 384 ? 0.075
+            : estimatedContainerSize < 448 ? 0.07
+            : estimatedContainerSize < 512 ? 0.065
+            : 0.06
+          const preferredGap = estimatedContainerSize * gapPercentage
+          const gap = Math.max(minGap, preferredGap)
+          const newRadius = Math.min(centerRadius + gap + skillRadius, maxRadius)
+          
           setRadius(newRadius)
         }
       }
@@ -173,6 +255,10 @@ const Skills = () => {
 
     updateRadius()
     window.addEventListener('resize', updateRadius)
+    // Recalculate when section becomes visible to ensure proper sizing
+    if (isVisible) {
+      setTimeout(updateRadius, 100)
+    }
     return () => window.removeEventListener('resize', updateRadius)
   }, [isVisible])
 
@@ -217,12 +303,12 @@ const Skills = () => {
             <span className="w-6 sm:w-8 h-px bg-accent" />
             Technical Stack
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-secondary leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary leading-tight">
             Skills & <span className="text-accent">Expertise</span>
           </h2>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 items-center justify-between">
+        <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 md:gap-14 lg:gap-14 items-center justify-between">
           {/* Left: Circular Skills Showcase - Main Focus */}
           <div className="w-full lg:flex-1 flex justify-center">
             <div
@@ -338,37 +424,6 @@ const Skills = () => {
             ))}
           </div>
         </div>
-
-        {/* Category indicator dots at bottom */}
-        <div className="mt-12 sm:mt-16 md:mt-20 flex justify-center gap-2 sm:gap-3">
-          {skillCategories.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setActiveCategory(index)
-                if (autoRotateRef.current) clearInterval(autoRotateRef.current)
-              }}
-              className={`transition-all duration-300 rounded-full ${
-                activeCategory === index
-                  ? "w-6 sm:w-8 h-1.5 sm:h-2 bg-accent shadow-lg shadow-accent/50 dark:shadow-accent/50 [data-theme='light']:shadow-accent/60"
-                  : "w-1.5 sm:w-2 h-1.5 sm:h-2 bg-secondary/30 dark:bg-secondary/30 [data-theme='light']:bg-secondary/40 hover:bg-secondary/60 dark:hover:bg-secondary/60 [data-theme='light']:hover:bg-secondary/70"
-              }`}
-              aria-label={`Go to ${skillCategories[index].category}`}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Navigation button */}
-      <div className="hidden md:flex absolute bottom-8 right-8 items-center gap-4">
-        <span className="text-xs md:text-sm uppercase tracking-wider text-secondary/60 dark:text-secondary/60 [data-theme='light']:text-secondary/70">NEXT SECTION</span>
-        <button
-          onClick={scrollToNextSection}
-          className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background dark:text-background [data-theme='light']:text-background hover:shadow-lg hover:shadow-accent/50 dark:hover:shadow-accent/50 [data-theme='light']:hover:shadow-accent/60 transition-all duration-300 hover:translate-y-1"
-          aria-label="Next section"
-        >
-          <FiArrowDownRight className="w-5 h-5" />
-        </button>
       </div>
 
       <style jsx>{`

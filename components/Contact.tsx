@@ -39,7 +39,7 @@ const Contact = () => {
         <div
           className={`transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-secondary leading-tight max-w-4xl mb-12 sm:mb-14 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-secondary leading-tight max-w-4xl mb-12 sm:mb-14 md:mb-16">
             Have a project or collaboration in mind?
             <span className="text-accent"> Let&apos;s build something intelligent together.</span>
           </h2>

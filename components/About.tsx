@@ -90,16 +90,6 @@ const About = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex absolute bottom-8 right-8 items-center gap-4">
-        <span className="text-xs md:text-sm uppercase tracking-wider text-secondary/60 dark:text-secondary/60 [data-theme='light']:text-secondary/70">NEXT SECTION</span>
-        <button
-          onClick={scrollToNextSection}
-          className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background dark:text-background [data-theme='light']:text-background hover:scale-110 transition-transform duration-300 shadow-lg hover:shadow-accent/50 dark:hover:shadow-accent/50 [data-theme='light']:hover:shadow-accent/60"
-          aria-label="Next section"
-        >
-          <FiArrowDownRight className="w-5 h-5" />
-        </button>
-      </div>
     </section>
   )
 }

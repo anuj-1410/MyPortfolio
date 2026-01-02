@@ -19,26 +19,26 @@ const experiences: Experience[] = [
     company: "Amdox Technologies",
     role: "Data Science & Analytics Intern",
     location: "Remote",
-    duration: "October 2024 - Present",
+    duration: "October 2025 - Present",
     description: [
-      "Engineered multi-agent system using AutoGen and Gemini 1.5 Pro for autonomous data analysis lifecycle execution",
-      "Developed self-healing Python execution engine in FastAPI with automated error diagnosis and resolution",
-      "Significantly reduced insight lag for businesses through intelligent data processing automation",
+      "Engineered a Cryptocurrency Analytics Dashboard using Streamlit and Facebook Prophet, delivering 365-day price forecasts and real-time technical indicators for 7+ digital assets",
+      "Built a Dynamic AI Chatbot by implementing machine learning models and statistical algorithms to automate data-driven responses and improve user interaction efficiency",
+      "Completed daily intensive technical training and monthly evaluations focused on the full data lifecycle, from automatic data cleaning to complex predictive modeling",
     ],
-    technologies: ["Python", "FastAPI", "AutoGen", "Gemini 1.5 Pro", "Data Analysis", "AI"],
+    technologies: ["Python", "Streamlit", "Prophet", "Machine Learning", "Data Analysis", "AI"],
   },
   {
     id: 2,
     company: "ACM Chapter RCOEM",
     role: "Member & Event Coordinator",
     location: "Nagpur, India",
-    duration: "June 2024 - Present",
+    duration: "June 2025 - Present",
     description: [
-      "Planned and executed 5+ technical events including workshops and hackathons for skill development",
-      "Coordinated with 10+ team members to ensure smooth execution of all activities and participants engagement",
-      "Engineered Cryptocurrency Analytics Dashboard using Streamlit and Facebook Prophet for forecasting",
+      "Coordinated 4+ hackathons and workshops, managing 100+ participants and end-to-end logistics",
+      "Led cross-functional coordination for event planning, task allocation, and on-ground execution",
+      "Increased student participation by 30%+ through targeted outreach and peer engagement",
     ],
-    technologies: ["Streamlit", "Prophet", "Python", "Event Management", "Technical Training", "Data Science"],
+    technologies: ["Event Management", "Project Coordination", "Team Leadership", "Technical Training"],
   },
 ]
 
@@ -179,16 +179,6 @@ const Experience = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex absolute bottom-8 right-8 items-center gap-4">
-        <span className="text-xs md:text-sm uppercase tracking-wider text-secondary/60 dark:text-secondary/60 [data-theme='light']:text-secondary/70">NEXT SECTION</span>
-        <button
-          onClick={scrollToNextSection}
-          className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background dark:text-background [data-theme='light']:text-background hover:scale-110 transition-transform duration-300 shadow-lg hover:shadow-accent/50 dark:hover:shadow-accent/50 [data-theme='light']:hover:shadow-accent/60"
-          aria-label="Next section"
-        >
-          <FiArrowDownRight className="w-5 h-5" />
-        </button>
-      </div>
     </section>
   )
 }

@@ -253,17 +253,6 @@ const Portfolio = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex absolute bottom-8 right-8 items-center gap-4">
-        <span className="text-sm uppercase tracking-wider text-secondary/60">NEXT SECTION</span>
-        <button
-          onClick={scrollToNextSection}
-          className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background hover:scale-110 transition-transform duration-300 shadow-lg hover:shadow-accent/50"
-          aria-label="Next section"
-        >
-          <FiArrowDownRight className="w-5 h-5" />
-        </button>
-      </div>
-
       <style jsx>{`
         @keyframes slideUp {
           from { opacity: 0; transform: translateY(20px); }

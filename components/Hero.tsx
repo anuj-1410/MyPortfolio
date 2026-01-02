@@ -7,6 +7,7 @@ const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [theme, setTheme] = useState<"dark" | "light">("dark")
   const [showCursor, setShowCursor] = useState(true)
+  const [showContactButton, setShowContactButton] = useState(true)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -47,6 +48,23 @@ const Hero = () => {
     return () => clearInterval(interval)
   }, [])
 
+  // Hide contact button when Contact section is visible
+  useEffect(() => {
+    const handleScroll = () => {
+      const contactSection = document.getElementById("contact")
+      if (contactSection) {
+        const rect = contactSection.getBoundingClientRect()
+        // Hide button when Contact section is in viewport (top of section is above bottom of viewport)
+        const isContactVisible = rect.top < window.innerHeight && rect.bottom > 0
+        setShowContactButton(!isContactVisible)
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll() // Check initial state
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
@@ -54,21 +72,26 @@ const Hero = () => {
     }
   }
 
+  const scrollToContact = () => {
+    scrollToSection("contact")
+  }
+
   const techBadges = [
-    { name: "React", icon: "R", color: "#FF6B5B" },
-    { name: "Next.js", icon: "N", color: "#FF6B5B" },
     { name: "Python", icon: "Py", color: "#FF6B5B" },
+    { name: "C++", icon: "C++", color: "#FF6B5B" },
+    { name: "React Js", icon: "R", color: "#FF6B5B" },
+    { name: "Next Js", icon: "N", color: "#FF6B5B" },
     { name: "FastAPI", icon: "F", color: "#FF6B5B" },
     { name: "TensorFlow", icon: "TF", color: "#FF6B5B" },
-    { name: "Docker", icon: "D", color: "#FF6B5B" },
-    { name: "JavaScript", icon: "JS", color: "#FF6B5B" },
-    { name: "Node.js", icon: "N", color: "#FF6B5B" },
-    { name: "PostgreSQL", icon: "PG", color: "#FF6B5B" },
-    { name: "MongoDB", icon: "M", color: "#FF6B5B" },
+    { name: "AutoGen", icon: "AG", color: "#FF6B5B" },
+    { name: "Keras", icon: "K", color: "#FF6B5B" },
     { name: "Scikit-learn", icon: "SK", color: "#FF6B5B" },
+    { name: "Streamlit", icon: "S", color: "#FF6B5B" },
+    { name: "Flask", icon: "Fl", color: "#FF6B5B" },
+    { name: "Docker", icon: "D", color: "#FF6B5B" },
     { name: "Git", icon: "G", color: "#FF6B5B" },
-    { name: "AWS", icon: "AWS", color: "#FF6B5B" },
-    { name: "TypeScript", icon: "TS", color: "#FF6B5B" },
+    { name: "JavaScript", icon: "JS", color: "#FF6B5B" },
+    { name: "Java", icon: "J", color: "#FF6B5B" },
   ]
 
   // We have 14 unique badges: React, Next.js, Python, FastAPI, TensorFlow, Docker,
@@ -104,7 +127,7 @@ const Hero = () => {
                   color: theme === "dark" ? "rgba(245, 245, 240, 0.6)" : "rgba(10, 10, 10, 0.6)",
                 }}
               >
-                AI/ML ENGINEER & DATA SCIENTIST / INDIA
+                AI/ML STUDENT & FULL STACK DEVELOPER / INDIA
               </p>
             </div>
 
@@ -138,7 +161,7 @@ const Hero = () => {
                   color: theme === "dark" ? "rgba(245, 245, 240, 0.7)" : "rgba(10, 10, 10, 0.7)",
                 }}
               >
-                Building intelligent systems that transform data into insights. From AI models to production-ready
+                Building autonomous AI systems and scalable end-to-end applications. From AI models to production-ready
                 solutions.
               </p>
             </div>
@@ -191,170 +214,84 @@ const Hero = () => {
                   }}
                 >
                   <div className="space-y-0.5 sm:space-y-1">
+                    {/* Line 1: Object Declaration */}
                     <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
-                      <span 
-                        className="select-none w-4 sm:w-5 md:w-6 transition-colors duration-300 flex-shrink-0"
-                        style={{
-                          color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)",
-                        }}
-                      >
-                        1
-                      </span>
+                      <span className="select-none w-4 sm:w-5 md:w-6 flex-shrink-0" style={{ color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)" }}>1</span>
                       <span className="flex-1 min-w-0">
                         <span style={{ color: theme === "dark" ? "#569CD6" : "#0066CC" }}>const</span>{" "}
-                        <span style={{ color: theme === "dark" ? "#4EC9B0" : "#098658" }}>engineer</span>
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          {" "}= {"{"}
-                        </span>
+                        <span style={{ color: theme === "dark" ? "#4EC9B0" : "#008080" }}>engineer</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}> = {"{"}</span>
                       </span>
                     </div>
 
+                    {/* Line 2: Name */}
                     <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
-                      <span 
-                        className="select-none w-4 sm:w-5 md:w-6 transition-colors duration-300 flex-shrink-0"
-                        style={{
-                          color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)",
-                        }}
-                      >
-                        2
-                      </span>
-                      <span className="flex-1 min-w-0 break-words">
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          {" "}name:{" "}
-                        </span>
+                      <span className="select-none w-4 sm:w-5 md:w-6 flex-shrink-0" style={{ color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)" }}>2</span>
+                      <span className="flex-1 min-w-0 ml-4">
+                        <span style={{ color: theme === "dark" ? "#9CDCFE" : "#001080" }}>name</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>: </span>
                         <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"Anuj Agrawal"</span>
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          ,
-                        </span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>,</span>
                       </span>
                     </div>
 
+                    {/* Line 3: Education */}
                     <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
-                      <span 
-                        className="select-none w-4 sm:w-5 md:w-6 transition-colors duration-300 flex-shrink-0"
-                        style={{
-                          color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)",
-                        }}
-                      >
-                        3
-                      </span>
-                      <span className="flex-1 min-w-0 break-words">
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          {" "}focus:{" "}
-                        </span>
-                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"AI/ML & Data Science"</span>
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          ,
-                        </span>
+                      <span className="select-none w-4 sm:w-5 md:w-6 flex-shrink-0" style={{ color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)" }}>3</span>
+                      <span className="flex-1 min-w-0 ml-4">
+                        <span style={{ color: theme === "dark" ? "#9CDCFE" : "#001080" }}>education</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>: </span>
+                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"B.Tech @ RCOEM (AI/ML)"</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>,</span>
                       </span>
                     </div>
 
+                    {/* Line 4: Expertise (Updated) */}
                     <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
-                      <span 
-                        className="select-none w-4 sm:w-5 md:w-6 transition-colors duration-300 flex-shrink-0"
-                        style={{
-                          color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)",
-                        }}
-                      >
-                        4
-                      </span>
-                      <span className="flex-1 min-w-0 break-words">
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          {" "}expertise:{" "}
-                        </span>
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          [
-                        </span>
-                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"TensorFlow"</span>
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          ,{" "}
-                        </span>
+                      <span className="select-none w-4 sm:w-5 md:w-6 flex-shrink-0" style={{ color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)" }}>4</span>
+                      <span className="flex-1 min-w-0 ml-4">
+                        <span style={{ color: theme === "dark" ? "#9CDCFE" : "#001080" }}>expertise</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>: [</span>
+                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"React"</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>, </span>
                         <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"FastAPI"</span>
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          ,{" "}
-                        </span>
-                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"AutoGen"</span>
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          ]
-                        </span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>, </span>
+                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"TensorFlow"</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>],</span>
                       </span>
                     </div>
 
+                    {/* Line 5: Stats Object (Expanded with Ratings) */}
                     <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
-                      <span 
-                        className="select-none w-4 sm:w-5 md:w-6 transition-colors duration-300 flex-shrink-0"
-                        style={{
-                          color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)",
-                        }}
-                      >
-                        5
+                      <span className="select-none w-4 sm:w-5 md:w-6 flex-shrink-0" style={{ color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)" }}>5</span>
+                      <span className="flex-1 min-w-0 ml-4">
+                        <span style={{ color: theme === "dark" ? "#9CDCFE" : "#001080" }}>stats</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>: {"{"} </span>
+                        <span style={{ color: theme === "dark" ? "#9CDCFE" : "#001080" }}>dsa</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>: </span>
+                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"400+"</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>, </span>
+                        <span style={{ color: theme === "dark" ? "#9CDCFE" : "#001080" }}>lc</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>: </span>
+                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"1550+"</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>, </span>
+                        <span style={{ color: theme === "dark" ? "#9CDCFE" : "#001080" }}>cc</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>: </span>
+                        <span style={{ color: theme === "dark" ? "#CE9178" : "#A31515" }}>"1350+"</span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}> {"}"},</span>
                       </span>
+                    </div>
+
+                    {/* Line 7: Closing Bracket */}
+                    <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
+                      <span className="select-none w-4 sm:w-5 md:w-6 flex-shrink-0" style={{ color: theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.4)" }}>7</span>
                       <span className="flex-1 min-w-0">
-                        <span 
-                          className="transition-colors duration-300"
-                          style={{
-                            color: theme === "dark" ? "#FFFFFF" : "#24292E",
-                          }}
-                        >
-                          {"}"};
-                        </span>
+                        <span style={{ color: theme === "dark" ? "#FFFFFF" : "#24292E" }}>{"}"};</span>
                         <span
                           className={`inline-block w-1.5 sm:w-2 h-3 sm:h-4 ml-1 transition-opacity duration-100 ${showCursor ? "opacity-100" : "opacity-0"}`}
-                          style={{
-                            backgroundColor: theme === "dark" ? "#FF0000" : "#FF6B5B",
-                          }}
+                          style={{ backgroundColor: "#FF6B5B" }}
                         />
-                      </span>
+                      </span> 
                     </div>
                   </div>
                 </div>
@@ -412,29 +349,6 @@ const Hero = () => {
             </div>
           </div>
         </div>
-
-        {/* Bottom Right - About Button */}
-        <div
-          className={`hidden md:flex absolute bottom-8 right-8 items-center gap-4 transition-all duration-1000 delay-700 ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <span
-            className="text-xs md:text-sm uppercase tracking-wider"
-            style={{
-              color: theme === "dark" ? "rgba(245, 245, 240, 0.6)" : "rgba(10, 10, 10, 0.6)",
-            }}
-          >
-            ABOUT ME
-          </span>
-          <button
-            onClick={() => scrollToSection("about")}
-            className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-white hover:scale-110 transition-transform duration-300 shadow-lg hover:shadow-accent/50"
-            aria-label="About me"
-          >
-            <FiArrowDownRight className="w-5 h-5" />
-          </button>
-        </div>
       </div>
 
       {/* Theme Toggle Button - Hidden on mobile (shown in Navbar), visible on desktop */}
@@ -450,6 +364,38 @@ const Hero = () => {
       >
         <span className="text-xl">{theme === "dark" ? "☀️" : "🌙"}</span>
       </button>
+
+      {/* Floating Contact Button with Label - Bottom Right */}
+      <div
+        className={`fixed bottom-8 right-8 z-50 flex items-center gap-3 transition-all duration-300 ${
+          showContactButton ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
+        }`}
+      >
+        {/* Contact Me Label */}
+        <span
+          className="text-xs sm:text-sm uppercase tracking-wider font-medium whitespace-nowrap transition-all duration-300 px-3 sm:px-4 py-2 rounded-full border"
+          style={{
+            backgroundColor: theme === "dark" ? "#1A1A1A" : "#F5F5F5",
+            borderColor: theme === "dark" ? "rgba(245, 245, 240, 0.1)" : "rgba(10, 10, 10, 0.1)",
+            color: theme === "dark" ? "#F5F5F0" : "#0A0A0A",
+          }}
+        >
+          CONTACT ME
+        </span>
+        
+        {/* Floating Button */}
+        <button
+          onClick={scrollToContact}
+          className="w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-accent/50"
+          style={{
+            backgroundColor: "#FF6B5B",
+            color: "#FFFFFF",
+          }}
+          aria-label="Scroll to contact"
+        >
+          <FiArrowDownRight className="w-5 h-5" />
+        </button>
+      </div>
 
       <style jsx>{`
         @keyframes tech-scroll {

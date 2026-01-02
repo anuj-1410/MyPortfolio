@@ -12,8 +12,10 @@ const educationData = [
     year: "August 2023 - Present",
     gpa: "9.61 CGPA",
     achievements: [
-      "Merit Scholarship for Top Position",
-      "AlgoUniversity Technology Fellowship (Top 4,000 of 20,000+ applicants)",
+      "College Merit Scholarship (Won Rs. 10,000)",
+      "Finalist, BlockDAG Hackathon 2025",
+      "Completed Google Project Management Professional Certificate",
+      "Oracle OCI AI & Generative AI Certified Foundations Associate",
     ],
   },
   {
@@ -75,7 +77,7 @@ const Education = () => {
 
         {/* Section Title */}
         <h2
-          className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-secondary mb-8 sm:mb-12 md:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+          className={`text-3xl sm:text-4xl md:text-5xl font-display font-bold text-secondary mb-8 sm:mb-12 md:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
         >
           Academic <span className="text-accent">Journey</span>
         </h2>
@@ -228,18 +230,6 @@ const Education = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Next Section Button */}
-        <div className="hidden md:flex absolute right-8 items-center gap-4">
-          <span className="text-xs md:text-sm uppercase tracking-wider text-secondary/60 dark:text-secondary/60 [data-theme='light']:text-secondary/70">NEXT SECTION</span>
-          <button
-            onClick={scrollToNextSection}
-            className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background dark:text-background [data-theme='light']:text-background hover:scale-110 transition-transform duration-300 shadow-lg hover:shadow-accent/50 dark:hover:shadow-accent/50 [data-theme='light']:hover:shadow-accent/60"
-            aria-label="Next section"
-          >
-            <FiArrowDownRight className="w-5 h-5" />
-          </button>
         </div>
 
         <style jsx>{`
