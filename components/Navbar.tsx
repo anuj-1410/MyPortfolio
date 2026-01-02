@@ -18,6 +18,43 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+  const [theme, setTheme] = useState<"dark" | "light">("dark")
+
+  // Initialize theme from document or system preference
+  useEffect(() => {
+    const currentTheme = document.documentElement.getAttribute("data-theme") as "dark" | "light" | null
+    if (currentTheme) {
+      setTheme(currentTheme)
+    } else {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      const initialTheme = prefersDark ? "dark" : "light"
+      setTheme(initialTheme)
+      document.documentElement.setAttribute("data-theme", initialTheme)
+    }
+  }, [])
+
+  // Sync theme when document attribute changes (from Hero component)
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const currentTheme = document.documentElement.getAttribute("data-theme") as "dark" | "light" | null
+      if (currentTheme && currentTheme !== theme) {
+        setTheme(currentTheme)
+      }
+    })
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    })
+
+    return () => observer.disconnect()
+  }, [theme])
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark"
+    setTheme(newTheme)
+    document.documentElement.setAttribute("data-theme", newTheme)
+  }
 
   const menuItems = [
     { id: "home", label: "Home", icon: FiHome },
@@ -32,10 +69,8 @@ const Navbar = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      const offset = 0
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - offset
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" })
+      // Use scrollIntoView which respects scroll-margin-top CSS property
+      element.scrollIntoView({ behavior: "smooth", block: "start" })
       setIsOpen(false)
     }
   }
@@ -79,7 +114,7 @@ const Navbar = () => {
           className="text-lg font-display font-bold tracking-tight text-secondary hover:text-accent transition-colors duration-300"
           style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
         >
-          SAEED<span className="text-accent">.</span>
+          ANUJ<span className="text-accent">.</span>
         </button>
 
         {/* Navigation Items with Icons */}
@@ -143,20 +178,37 @@ const Navbar = () => {
 
       {/* Fixed Top Bar - Mobile & Tablet */}
       <div className="fixed top-0 left-0 right-0 z-50 lg:hidden">
-        <div className="flex items-center justify-between px-6 py-5">
+        {/* Glass effect background */}
+        <div className="absolute inset-0 bg-background/80 dark:bg-background/80 [data-theme='light']:bg-background/90 backdrop-blur-xl border-b border-secondary/10 dark:border-secondary/10 [data-theme='light']:border-secondary/20" />
+        
+        <div className="relative flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5">
+          {/* Left side - Theme Button */}
+          <button
+            onClick={toggleTheme}
+            className="relative z-50 w-10 h-10 sm:w-12 sm:h-12 rounded-full border flex items-center justify-center hover:border-accent transition-all duration-300"
+            style={{
+              backgroundColor: theme === "dark" ? "rgba(26, 26, 26, 0.6)" : "rgba(245, 245, 245, 0.6)",
+              borderColor: theme === "dark" ? "rgba(245, 245, 240, 0.1)" : "rgba(10, 10, 10, 0.1)",
+              color: theme === "dark" ? "#F5F5F0" : "#0A0A0A",
+            }}
+            aria-label="Toggle theme"
+          >
+            <span className="text-lg sm:text-xl">{theme === "dark" ? "☀️" : "🌙"}</span>
+          </button>
+
           {/* Logo */}
           <button
             onClick={() => scrollToSection("home")}
             className="text-xl font-display font-bold tracking-tight text-secondary"
           >
-            SAEED<span className="text-accent">.</span>
+            ANUJ<span className="text-accent">.</span>
           </button>
 
           {/* Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={`relative z-50 w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-300 ${
-              isOpen ? "bg-accent text-primary" : "bg-muted text-secondary"
+              isOpen ? "bg-accent text-primary" : "bg-muted/50 text-secondary backdrop-blur-sm"
             }`}
             aria-label="Toggle Menu"
           >
@@ -222,30 +274,37 @@ const Navbar = () => {
               <div>
                 <p className="text-secondary/40 text-xs uppercase tracking-widest mb-2">Get in touch</p>
                 <a
-                  href="mailto:hello@saeeddesigns.com"
-                  className="text-secondary hover:text-accent transition-colors text-lg font-medium"
+                  href="mailto:anujagrawal1410@gmail.com"
+                  className="text-secondary hover:text-accent transition-colors text-base sm:text-lg font-medium break-all"
                 >
-                  hello@saeeddesigns.com
+                  anujagrawal1410@gmail.com
                 </a>
               </div>
 
               <div>
                 <p className="text-secondary/40 text-xs uppercase tracking-widest mb-2">Based in</p>
-                <p className="text-secondary text-lg font-medium">Dubai, UAE</p>
+                <p className="text-secondary text-base sm:text-lg font-medium">Nagpur, India</p>
               </div>
 
               <div>
                 <p className="text-secondary/40 text-xs uppercase tracking-widest mb-3">Follow</p>
-                <div className="flex gap-4">
-                  {["Behance", "Dribbble", "LinkedIn"].map((social) => (
-                    <a
-                      key={social}
-                      href="#"
-                      className="text-secondary/50 hover:text-accent transition-colors text-sm font-medium hover-underline"
-                    >
-                      {social}
-                    </a>
-                  ))}
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href="https://github.com/anuj1410"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-secondary/50 hover:text-accent transition-colors text-sm font-medium hover-underline"
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/anuj-1410"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-secondary/50 hover:text-accent transition-colors text-sm font-medium hover-underline"
+                  >
+                    LinkedIn
+                  </a>
                 </div>
               </div>
             </div>

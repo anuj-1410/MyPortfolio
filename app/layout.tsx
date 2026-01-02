@@ -16,9 +16,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Saeed Ijaz - Creative Designer",
-  description: "Portfolio of Saeed Ijaz - Video Editor, Motion Designer & Creative Director",
-    generator: 'v0.app'
+  title: "Anuj Agrawal - AI/ML Engineer & Data Scientist",
+  description: "Portfolio of Anuj Agrawal - AI/ML Engineer, Data Scientist & Full Stack Developer",
 };
 
 export default function RootLayout({

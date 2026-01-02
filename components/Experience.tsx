@@ -72,19 +72,19 @@ const Experience = () => {
   }
 
   return (
-    <section ref={sectionRef} id="experience" className="relative py-20 overflow-hidden">
+    <section ref={sectionRef} id="experience" className="relative py-16 sm:py-20 md:py-24 lg:pt-14 lg:pb-28 overflow-hidden">
       <div className="container-custom">
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="mb-12 sm:mb-16">
           <span
-            className={`inline-flex items-center gap-3 text-sm font-medium text-secondary/40 tracking-[0.2em] uppercase mb-6 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            className={`inline-flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-medium text-secondary/40 dark:text-secondary/40 [data-theme='light']:text-secondary/60 tracking-[0.2em] uppercase mb-4 sm:mb-6 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           >
-            <span className="w-8 h-px bg-accent" />
+            <span className="w-6 sm:w-8 h-px bg-accent" />
             Experience
           </span>
 
           <h2
-            className={`text-4xl md:text-5xl font-display font-bold text-secondary transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            className={`text-3xl sm:text-4xl md:text-5xl font-display font-bold text-secondary transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           >
             Professional Journey
           </h2>
@@ -100,23 +100,23 @@ const Experience = () => {
           />
 
           {/* Experience Cards */}
-          <div className="space-y-8 md:space-y-12">
+          <div className="space-y-6 sm:space-y-8 md:space-y-12">
             {experiences.map((exp, index) => (
               <div key={exp.id} className="relative" onMouseEnter={() => setActiveIndex(index)}>
                 <div
                   className={`hidden md:flex absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-3 transition-all duration-300 ${
                     activeIndex === index
                       ? "border-accent bg-accent scale-125"
-                      : "border-accent/30 bg-background scale-100"
+                      : "border-accent/30 dark:border-accent/30 [data-theme='light']:border-accent/40 bg-background dark:bg-background [data-theme='light']:bg-background scale-100"
                   }`}
                   style={{ top: "30px" }}
                 />
 
                 {/* Card Content - Alternating Layout */}
-                <div className={`md:w-1/2 ${index % 2 === 0 ? "md:ml-auto md:pl-12" : "md:pr-12"}`}>
+                <div className={`md:w-1/2 ${index % 2 === 0 ? "md:pr-8 lg:pr-12" : "md:ml-auto md:pl-8 lg:pl-12"}`}>
                   <div
-                    className={`group relative bg-muted/20 backdrop-blur-sm rounded-xl p-5 border border-secondary/5 hover:border-accent/30 transition-all duration-300 ${
-                      activeIndex === index ? "border-accent/30 shadow-lg shadow-accent/10" : ""
+                    className={`group relative bg-muted/20 dark:bg-muted/20 [data-theme='light']:bg-muted/30 backdrop-blur-sm rounded-xl p-4 sm:p-5 md:p-6 border border-secondary/5 dark:border-secondary/5 [data-theme='light']:border-secondary/20 hover:border-accent/30 dark:hover:border-accent/30 [data-theme='light']:hover:border-accent/40 transition-all duration-300 ${
+                      activeIndex === index ? "border-accent/30 dark:border-accent/30 [data-theme='light']:border-accent/40 shadow-lg shadow-accent/10 dark:shadow-accent/10 [data-theme='light']:shadow-accent/20" : ""
                     }`}
                   >
                     {/* Badge */}
@@ -145,7 +145,7 @@ const Experience = () => {
                     {/* Description */}
                     <ul className="space-y-1.5 mb-4">
                       {exp.description.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-xs text-secondary/70 leading-relaxed">
+                        <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-secondary/70 dark:text-secondary/70 [data-theme='light']:text-secondary/80 leading-relaxed">
                           <span className="text-accent mt-1 font-bold">›</span>
                           <span>{item}</span>
                         </li>
@@ -153,13 +153,13 @@ const Experience = () => {
                     </ul>
 
                     {/* Technologies */}
-                    <div className="pt-4 border-t border-secondary/5">
-                      <p className="text-xs text-secondary/50 font-medium uppercase tracking-wide mb-2">Tech Stack</p>
+                    <div className="pt-4 border-t border-secondary/5 dark:border-secondary/5 [data-theme='light']:border-secondary/20">
+                      <p className="text-xs text-secondary/50 dark:text-secondary/50 [data-theme='light']:text-secondary/60 font-medium uppercase tracking-wide mb-2">Tech Stack</p>
                       <div className="flex flex-wrap gap-1.5">
                         {exp.technologies.map((tech, idx) => (
                           <span
                             key={idx}
-                            className="px-2.5 py-1 text-xs font-medium text-secondary/60 bg-accent/5 rounded-full hover:bg-accent/10 hover:text-accent transition-colors duration-300"
+                            className="px-2 sm:px-2.5 py-1 text-xs font-medium text-secondary/60 dark:text-secondary/60 [data-theme='light']:text-secondary/70 bg-accent/5 dark:bg-accent/5 [data-theme='light']:bg-accent/10 rounded-full hover:bg-accent/10 dark:hover:bg-accent/10 [data-theme='light']:hover:bg-accent/20 hover:text-accent transition-colors duration-300"
                           >
                             {tech}
                           </span>
@@ -179,11 +179,11 @@ const Experience = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-8 right-8 flex items-center gap-4">
-        <span className="text-xs md:text-sm uppercase tracking-wider text-secondary/60">NEXT SECTION</span>
+      <div className="hidden md:flex absolute bottom-8 right-8 items-center gap-4">
+        <span className="text-xs md:text-sm uppercase tracking-wider text-secondary/60 dark:text-secondary/60 [data-theme='light']:text-secondary/70">NEXT SECTION</span>
         <button
           onClick={scrollToNextSection}
-          className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-primary hover:scale-110 transition-transform duration-300 shadow-lg hover:shadow-accent/50"
+          className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-background dark:text-background [data-theme='light']:text-background hover:scale-110 transition-transform duration-300 shadow-lg hover:shadow-accent/50 dark:hover:shadow-accent/50 [data-theme='light']:hover:shadow-accent/60"
           aria-label="Next section"
         >
           <FiArrowDownRight className="w-5 h-5" />

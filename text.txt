@@ -1,0 +1,113 @@
+Anuj Agrawal 
+
+
+Contact: +917223061410 | anujagrawall410@gmail.com  Links: Linkedin | GitHub | Leetcode | Codolio 
+
+
+EDUCATION 
+
+
+Shri Ramdeobaba College of Engineering and Management, Nagpur | August 2023 - Present 
+
+B.Tech, Computer Science and Engineering (AI/ML) | CGPA: 9.61 
+
+
+Khalsa Public School (CBSE), Dongargarh  |  June 2020 - March 23
+
+HSC with 88% | SSC with 82% 
+
+
+WORK EXPERIENCE 
+
+Amdox Technologies | Data science & Analytics intern | October 2025 - Present 
+
+
+
+
+Engineered a Cryptocurrency Analytics Dashboard using Streamlit and Facebook Prophet, delivering 365-day price forecasts and real-time technical indicators for 7+ digital assets. 
+
+Built a Dynamic AI Chatbot by implementing machine learning models and statistical algorithms to automate data-driven responses and improve user interaction efficiency. 
+
+Completed daily intensive technical training and monthly evaluations focused on the full data lifecycle, from automatic data cleaning to complex predictive modeling. 
+
+ACM Chapter RCOEM | Member & Event Coordinator June 2025 - Present 
+
+
+Coordinated 4+ hackathons and workshops, managing 100+ participants and end-to-end logistics. 
+
+Led cross-functional coordination for event planning, task allocation, and on-ground execution. 
+
+Increased student participation by 30%+ through targeted outreach and peer engagement. 
+
+
+PROJECTS 
+
+
+AutoShield: AI-Powered Web3 Security Platform GitHub 
+
+
+Led development of an AI-based fraud detection system with 97%+ accuracy using Random Forest. 
+
+Engineered 31 blockchain features to identify bots and fake Web3 accounts. 
+
+Enabled real-time wallet and user verification with low-latency responses. 
+
+Owned backend architecture using FastAPI + Solidity for immutable on-chain security attestations. 
+
+
+Autonomous Agentic AI Data Analyst GitHub 
+
+
+Developed a multi-agent autonomous data analysis system using AutoGen and Gemini 1.5 Pro. 
+
+Reduced business insight turnaround time by ~90% through end-to-end automated analysis. 
+
+Built a self-healing FastAPI Python engine to auto-fix errors, cutting human intervention by 70%. 
+
+
+Cryptocurrency Analytics & Forecasting Dashboard 
+
+Created a real-time crypto analytics dashboard along with Prophet/ARIMA forecasting models. 
+
+Delivered 7+ major cryptocurrency forecasts with automated technical insights. 
+
+Integrated rolling volatility, RSI, and MACD indicators to generate data-driven trading signals. 
+
+
+ACHIEVEMENTS & CERTIFICATIONS 
+
+Won Rs. 10,000 | College merit scholarship 
+
+Top 4,000 out of 20,000+ | Algouniversity Fellowship 
+
+Finalist BlockDAG Hackathon 2025 
+
+400+ Questions | Leetcode + GFG + other platforms 
+
+JIRA Certificate 
+
+GitHub 
+
+Oracle OCI AI Foundations | Certificate 
+
+Oracle OCI Generative AI Certificate 
+
+Google Project Management | Certificate 
+
+
+TECHNICAL SKILLS 
+
+
+Languages: C++, Python, Java, JavaScript 
+
+
+Web Dev: React Js, Next Js, Streamlit, FastAPI, Flask 
+
+
+Core concepts: DSA, OOP 
+
+
+DevOps & Tools: Docker, Jenkins, Git, VS Code 
+
+
+AI/ML: TensorFlow, Keras, CNN, Scikit-learn, NLP, Autogen
